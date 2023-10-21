@@ -4,30 +4,29 @@ import { kickIt } from '../../lib/kick'
 const markdown = ref('')
 
 function ask() {
-async function run() {
-    const v = await useAsyncData('kick', () => kickIt('/ai', 'chat', {
-        messages: [
-            {
-                role: 'json',
-                content: JSON.stringify(useContent().page.value.body.children)
-            },
-            {
-                role: 'system',
-                content: 'Your task is to continue the markdown content in plain text format'
-            }
-        ]
-    }))
+    async function run() {
+        const v = await useAsyncData('kick', () => kickIt('/ai', 'chat', {
+            messages: [
+                {
+                    role: 'json',
+                    content: JSON.stringify(useContent().page.value.body.children)
+                },
+                {
+                    role: 'system',
+                    content: 'Your task is to continue the markdown content in plain text format'
+                }
+            ]
+        }))
 
-    if (v.data.value) {
-        const d = v.data.value
+        if (v.data.value) {
+            const d = v.data.value
 
-        markdown.value = d.type === 'error' ? d.what :
-            d.type === 'chat' ? d.messages[d.messages.length - 1].content : d.type
+            markdown.value = d.type === 'error' ? d.what :
+                d.type === 'chat' ? d.messages[d.messages.length - 1].content : d.type
+        }
     }
+    run()
 }
-run()
-}
-
 </script>
 
 <template>
@@ -37,7 +36,7 @@ run()
     <button style="border: 1px solid; text-align: left; margin-top: 1em; padding: 0.5em 1em 0.2em 0.5em;" v-if="!markdown"
         @click="ask()">
         ✨
-        <div style="scale: 0.5; margin: -60% -50% -60% -50%; border-top: 1px solid;">
+        <div style="scale: 0.7; margin: -20% -10% -10% -10%; border-top: 1px solid;">
             <slot />
         </div>
     </button>
