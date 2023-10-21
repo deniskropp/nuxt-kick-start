@@ -46,8 +46,8 @@ export async function useChat(user?: string) {
     const messages = [
         {
             role: user ? 'user' : 'system',
-            content: user ?? 'Your task is to generate markdown content as per chat element.'
-            //content: 'Your task is to continue the markdown content in plain text format'
+            //content: user ?? 'Your task is to generate markdown content as per chat element.'
+            content: user ?? 'Your task is to continue the markdown content in plain text format'
         },
         ...Object.entries(chats[0].props).map((p: any) => ({
             role: `${p[0]}`,
