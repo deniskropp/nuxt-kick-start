@@ -1,5 +1,5 @@
 {
-  "name": "content-wind-template",
+  "name": "nuxt-kick-start",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
