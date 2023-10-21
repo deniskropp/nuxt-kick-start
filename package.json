@@ -10,5 +10,8 @@
   "devDependencies": {
     "content-wind": "latest",
     "nuxt": "latest"
+  },
+  "dependencies": {
+    "axios": "^1.5.1"
   }
 }
