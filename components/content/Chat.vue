@@ -1,30 +1,12 @@
 <script setup lang="ts">
-import { kickIt } from '../../lib/kick'
 
 const markdown = ref('')
 
 function ask() {
     async function run() {
-        const v = await useAsyncData('kick', () => kickIt('/ai', 'chat', {
-            messages: [
-                {
-                    role: 'json',
-                    content: JSON.stringify(useContent().page.value.body.children)
-                },
-                {
-                    role: 'system',
-                    content: 'Your task is to continue the markdown content in plain text format'
-                }
-            ]
-        }))
-
-        if (v.data.value) {
-            const d = v.data.value
-
-            markdown.value = d.type === 'error' ? d.what :
-                d.type === 'chat' ? d.messages[d.messages.length - 1].content : d.type
-        }
+        markdown.value = await useChat()
     }
+
     run()
 }
 </script>
