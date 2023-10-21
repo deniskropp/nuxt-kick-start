@@ -2,6 +2,9 @@
 
 Nuxt Content component module for generative AI
 
+## Demo
+
+Check out the demo at [nuxt-kick-demo.nuxt.space](https://nuxt-kick-demo.nuxt.space).
 
 ## Setup
 
