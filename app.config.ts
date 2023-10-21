@@ -3,6 +3,6 @@ export default defineAppConfig({
   cover: '/cover.jpg',
   socials: {
     twitter: 'deniseschleier',
-    github: 'Atinux/content-wind'
+    github: 'deniskropp/nuxt-kick-start'
   }
 })
