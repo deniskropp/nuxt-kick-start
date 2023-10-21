@@ -1,6 +1,6 @@
 export default defineAppConfig({
   // Configure Content Wind here
-  cover: '/cover.jpg',
+  cover: '/pastell.svg',
 
   socials: {
     twitter: 'deniseschleier',
