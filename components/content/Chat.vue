@@ -3,6 +3,7 @@ import { kickIt } from '../../lib/kick'
 
 const markdown = ref('')
 
+function ask() {
 async function run() {
     const v = await useAsyncData('kick', () => kickIt('/ai', 'chat', {
         messages: [
@@ -24,6 +25,8 @@ async function run() {
             d.type === 'chat' ? d.messages[d.messages.length - 1].content : d.type
     }
 }
+run()
+}
 
 </script>
 
@@ -32,7 +35,7 @@ async function run() {
     <MarkdownStringRenderer :markdownString="markdown" />
 
     <button style="border: 1px solid; text-align: left; margin-top: 1em; padding: 0.5em 1em 0.2em 0.5em;" v-if="!markdown"
-        @click="run()">
+        @click="ask()">
         ✨
         <div style="scale: 0.5; margin: -60% -50% -60% -50%; border-top: 1px solid;">
             <slot />
