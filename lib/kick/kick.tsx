@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-import { Message } from '../message'
+import { type Message } from '../message'
 //import { settings } from '../../context/Settings'
 
 
