@@ -1,0 +1,1 @@
+import{d as n,b as a,c as o}from"./entry.3de90492.js";const c=["value"],r=n({__name:"Chat2",props:{title:{type:String,default:"Untitled chat"}},setup(t){const e=t;return(l,s)=>(a(),o("input",{value:e.title},null,8,c))}});export{r as default};
