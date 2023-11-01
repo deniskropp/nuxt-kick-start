@@ -13,46 +13,50 @@ function getText(item: Item): string {
     if (item.type === 'text')
         str.push(item.value ?? 'ERROR')
 
-    if (item.tag === 'h1')
-        str.push('# ')
+//    if (item.tag === 'h1')
+//        str.push('# ')
 
-    if (item.tag === 'h2')
-        str.push('## ')
+//    if (item.tag === 'h2')
+//        str.push('## ')
 
-    if (item.tag === 'h3')
-        str.push('### ')
+//    if (item.tag === 'h3')
+//        str.push('### ')
 
     if (item.children)
         item.children.forEach(c => str.push(getText(c)))
 
-    return str.join('\n')
+    return str.join('\n').replaceAll('# \n', '# ')
 }
 
 export async function useChat(user?: string) {
     const { page } = useContent()
     const { body } = page.value
 
-    console.log('useChat(body)', body)
+    const children = body.children.filter(c => c.tag !== 'chat')
 
-    const parts = body.children.map((c: any) => ({
+    const parts = children.map((c: any) => ({
         role: `element:${c.tag ?? ''}`,
         content: getText(c)
     }))
 
     const chats = body.children.filter((c: any) => c.tag === 'chat')
 
-    console.log('useChat(chats)', chats)
+    const content = getText(chats[0])
 
     const messages = [
         {
             role: user ? 'user' : 'system',
             //content: user ?? 'Your task is to generate markdown content as per chat element.'
-            content: user ?? 'Your task is to continue the markdown content in plain text format'
+            content: user ?? 'Following user input in markdown format'
         },
         ...Object.entries(chats[0].props).map((p: any) => ({
             role: `${p[0]}`,
             content: p[1]
         })),
+        {
+            role: 'user',
+            content
+        },
         ...parts
     ]
 
