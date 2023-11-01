@@ -1,10 +1,17 @@
 <script setup lang="ts">
+const props = defineProps({
+    task: {
+        type: String,
+        default: ''
+    },
+})
+
 const markdown = ref('')
 const pending = ref(false)
 
-function ask() {
+const ask = () => {
     async function run() {
-        markdown.value = await useChat()
+        markdown.value = await useChat(props)
     }
 
     pending.value = true
@@ -14,7 +21,7 @@ function ask() {
 </script>
 
 <template>
-    <div style="width: 10px; height: 1px; background-color: white;" v-if="markdown"></div>
+    <div style="width: 40px; height: 2px; background-color: rebeccapurple; margin-top: 1em;" v-if="markdown"></div>
     <MarkdownStringRenderer :markdownString="markdown" />
 
     <button style="border: 1px solid; text-align: left; margin-top: 1em; padding: 0.5em 1em 0.2em 0.5em;" v-if="!markdown"

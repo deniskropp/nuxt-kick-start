@@ -1,40 +1,21 @@
 import { kickIt } from '../lib/kick'
 
-interface Item {
-    type: string
-    tag?: string
-    value?: string
-    children?: Item[]
-}
+export async function useKick() {
+    const 
 
-function getText(item: Item): string {
-    var str: string[] = []
+    return {
+        generate
+    }
 
-    if (item.type === 'text')
-        str.push(item.value ?? 'ERROR')
 
-//    if (item.tag === 'h1')
-//        str.push('# ')
-
-//    if (item.tag === 'h2')
-//        str.push('## ')
-
-//    if (item.tag === 'h3')
-//        str.push('### ')
-
-    if (item.children)
-        item.children.forEach(c => str.push(getText(c)))
-
-    return str.join('\n')//.replaceAll('# \n', '# ')
-}
-
-export async function useChat(constants?: any) {
     const { page } = useContent()
     const { body } = page.value
 
     const elements = body.children.filter((c: any) => c.tag !== 'chat')
     const chats = body.children.filter((c: any) => c.tag === 'chat')
 
+
+    function ask()
     const messages = [
         {
             role: 'system',
