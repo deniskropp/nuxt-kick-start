@@ -6,12 +6,14 @@ const props = defineProps({
     },
 })
 
+const { messages, generate } = await useChat(props)
+
 const markdown = ref('')
 const pending = ref(false)
 
 const ask = () => {
     async function run() {
-        markdown.value = await useChat(props)
+        markdown.value = await generate(messages)//, '/kx/all-wetek-2.txt?prepare=')
     }
 
     pending.value = true
