@@ -1,4 +1,6 @@
-import type { Message } from '~/lib/message'
+import axios from 'axios'
+
+import type { Message } from '../lib/message'
 import { kickIt } from '../lib/kick'
 
 interface Item {
@@ -71,8 +73,7 @@ Generate a response according to these rules:
     }
 
     async function generate(messages: Message[], kick_api?: string) {
-        const ret = await useAsyncData('kick',
-            () => kickIt(kick_api ?? '/ai', 'chat', { messages }))
+        const ret = await useAsyncData('kick', () => kickIt('/ai', 'chat', { messages }))
 
         if (ret.data.value) {
             const data = ret.data.value
@@ -84,6 +85,49 @@ Generate a response according to these rules:
             )
         }
 
-        throw new Error(JSON.stringify(ret))
+        return JSON.stringify(ret)
+
+
+
+        const options = {
+            method: 'POST',
+            url: 'https://openai80.p.rapidapi.com/completions',
+            headers: {
+                'content-type': 'application/json',
+                'X-RapidAPI-Key': 'acee344339mshfa967de0b6a29d8p148e75jsn9a5790c07991',
+                'X-RapidAPI-Host': 'openai80.p.rapidapi.com'
+            },
+            data: {
+                model: 'text-davinci-003',
+                prompt: messagesToPrompt(messages),
+                max_tokens: 7,
+                temperature: 0,
+                top_p: 1,
+                n: 1,
+                stream: false,
+                logprobs: null,
+                stop: '\n'
+            }
+        };
+
+        try {
+            const response = await axios.request(options);
+
+            console.log(response.data);
+
+            return response.data
+        } catch (error) {
+            console.error(error);
+            throw error
+        }
     }
+}
+
+
+
+function messagesToPrompt(messages: Message[]) {
+    return messages.map(m => `
+⫻${m.role}⫽
+${m.content}
+`).join('\n\n\n')
 }
