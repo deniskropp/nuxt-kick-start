@@ -1,18 +1,22 @@
-import type { Message } from '../lib/message'
-import { kickIt } from '../lib/kick'
+export async function useKick(constants: any) {
+    const { messages, generate } = await useChat(constants)
 
-export async function useKick(messages: Message[]) {
-    const ret = await useAsyncData('kick', () => kickIt('/ai', 'chat', { messages }))
+    const markdown = ref('')
+    const pending = ref(false)
 
-    if (ret.data.value) {
-        const data = ret.data.value
+    const ask = () => {
+        async function run() {
+            markdown.value = await generate(messages)
+        }
 
-        return (
-            data.type === 'error' ? data.what :
-                data.type === 'chat' ? data.messages[data.messages.length - 1].content :
-                    data.type
-        )
+        pending.value = true
+
+        run()
     }
 
-    return JSON.stringify(ret)
+    return {
+        markdown,
+        pending,
+        ask
+    }
 }

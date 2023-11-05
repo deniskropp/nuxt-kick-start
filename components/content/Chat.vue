@@ -6,23 +6,14 @@ const props = defineProps({
     },
 })
 
-const { messages, generate } = await useChat(props)
+const { markdown, pending, ask } = await useKick(props)
 
-const markdown = ref('')
-const pending = ref(false)
-
-const ask = () => {
-    async function run() {
-        markdown.value = await generate(messages)//, '/kx/all-wetek-2.txt?prepare=')
-    }
-
-    pending.value = true
-
-    run()
-}
+const { data } = await useAsyncData('home', () => queryContent('/').findOne())
 </script>
 
 <template>
+    {{ data }}
+
     <div style="width: 40px; height: 2px; background-color: rebeccapurple; margin-top: 1em;" v-if="markdown"></div>
     <MarkdownStringRenderer :markdownString="markdown" />
 
