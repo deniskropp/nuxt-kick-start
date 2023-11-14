@@ -53,6 +53,10 @@ Generate a response according to these rules:
 - Context is given by "element:#tag"
 `
         },
+        ...elements.map((e: Item) => ({
+            role: `element:${e.tag ?? ''}`,
+            content: getText(e)
+        })),
         ...Object.entries(constants).map(([key, value]) => ({
             role: `user:${key}`,
             content: value
@@ -61,10 +65,6 @@ Generate a response according to these rules:
             role: `user:[${index}]`,
             content: getText(c)
         })),
-        ...elements.map((e: Item) => ({
-            role: `element:${e.tag ?? ''}`,
-            content: getText(e)
-        }))
     ]
 
     return {
