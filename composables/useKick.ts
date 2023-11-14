@@ -17,6 +17,8 @@ export async function useKick(constants: any) {
     return {
         markdown,
         pending,
-        ask
+        ask,
+        messages,
+        generate
     }
 }
