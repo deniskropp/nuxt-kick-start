@@ -7,13 +7,9 @@ const props = defineProps({
 })
 
 const { markdown, pending, ask } = await useKick(props)
-
-const { data } = await useAsyncData('home', () => queryContent('/').findOne())
 </script>
 
 <template>
-    {{ data }}
-
     <div style="width: 40px; height: 2px; background-color: rebeccapurple; margin-top: 1em;" v-if="markdown"></div>
     <MarkdownStringRenderer :markdownString="markdown" />
 
