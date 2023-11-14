@@ -2,7 +2,23 @@
 const props = defineProps({
     task: {
         type: String,
-        default: ''
+        default: 'generate'
+    },
+    type: {
+        type: String,
+        default: 'fictional'
+    },
+    kind: {
+        type: String,
+        default: 'scientific'
+    },
+    value: {
+        type: String,
+        default: 'hyper real'
+    },
+    matter: {
+        type: String,
+        default: 'synthetic'
     },
 })
 
