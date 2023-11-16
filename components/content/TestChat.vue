@@ -34,7 +34,7 @@ async function go() {
     <div style="width: 40px; height: 2px; background-color: rebeccapurple; margin-top: 1em;" v-if="markdown"></div>
     <MarkdownStringRenderer :markdownString="markdown" />
 
-        <input v-if="!pending" v-model="input" style="color: #222222;" />
+        <input v-if="!pending" v-model="input" style="color: #222222; width: 70%;" />
 
         <button style="border: 1px solid; text-align: left; margin-top: 1em; padding: 0.5em 1em 0.2em 0.5em;" @click="() => {go()}" :disabled="pending">
             <div v-if="!pending">✨</div>
