@@ -19,7 +19,7 @@ async function go() {
 
         markdown.value += `\n\n---\n\n/${input.value}/\n---\n\n${last.value}`
 
-        messages.push({ role: 'asistant', content: last.value })
+        messages.push({ role: 'assistant', content: last.value })
     }
 
     pending.value = true
