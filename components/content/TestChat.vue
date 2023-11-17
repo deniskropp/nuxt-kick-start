@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({
-    name: {
-        task: String,
+    task: {
+        type: String,
         default: 'continue the chat'
     },
 })
