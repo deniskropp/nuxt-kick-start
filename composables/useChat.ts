@@ -36,7 +36,7 @@ export async function useChat(constants?: any) {
     const { body } = page.value
 
     // Context
-    const elements = body.children.filter((c: any) => c.tag !== 'chat' && c.tag !== 'text-chat')
+    const elements = body.children.filter((c: any) => c.tag !== 'chat' && c.tag !== 'test-chat')
 
     // Content
     const chats = body.children.filter((c: any) => c.tag === 'chat')
