@@ -78,7 +78,7 @@ async function go(append: boolean) {
 
         <button style="border: 1px solid; text-align: left; margin-top: 1em; padding: 0.5em 1em 0.2em 0.5em; min-height: 7em;"
             @click="() => { go(true) }" :disabled="pending">
-            <div v-if="!pending" style="scale: 0.9; margin: -10% -5% -5% -5%; border-top: 1px solid;">
+            <div v-if="!pending" xstyle="scale: 0.9; margin: -10% -5% -5% -5%; border-top: 1px solid;">
                 <div>✨</div>
                 <slot />
             </div>
