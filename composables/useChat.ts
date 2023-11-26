@@ -25,10 +25,16 @@ function getText(item: Item): string {
     //    if (item.tag === 'h3')
     //        str.push('### ')
 
+    //    if (item.tag === 'h4')
+    //        str.push('#### ')
+
+    if (item.tag === 'li')
+        str.push('- ')
+
     if (item.children)
         item.children.forEach(c => str.push(getText(c)))
 
-    return str.join('\n')//.replaceAll('# \n', '# ')
+    return str.join('\n').replaceAll('- \n', '- ')
 }
 
 export async function useChat(constants?: any) {
