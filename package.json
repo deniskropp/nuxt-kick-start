@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.0.0",
-    "@nuxthq/studio": "^1.0.3",
     "content-wind": "latest",
     "nuxt": "latest"
   },
