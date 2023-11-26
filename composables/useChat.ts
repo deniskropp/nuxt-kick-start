@@ -73,7 +73,7 @@ Generate a response according to these rules:
     }
 
     async function generate(messages: Message[], kick_api?: string) {
-        const ret = await useAsyncData('kick', () => kickIt('/ai', 'chat', { messages }))
+        const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', { messages }))
 
         if (ret.data.value) {
             const data = ret.data.value
