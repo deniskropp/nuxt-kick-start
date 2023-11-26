@@ -80,17 +80,15 @@ Generate a markdown response according to these rules:
 
     async function generate(messages: Message[], kick_api?: string) {
         const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', { messages }))
+        const data = ret.data.value
 
-        if (ret.data.value) {
-            const data = ret.data.value
+        if (!data)
+            throw new Error('no data')
 
-            return (
-                data.type === 'error' ? data.what :
-                    data.type === 'chat' ? data.messages[data.messages.length - 1].content :
-                        data.type
-            )
-        }
-
-        return JSON.stringify(ret)
+        return (
+            data.type === 'error' ? data.what :
+                data.type === 'chat' ? data.messages[data.messages.length - 1].content :
+                    data.type
+        )
     }
 }
