@@ -44,13 +44,13 @@ export async function useChat(constants?: any) {
     const messages: Message[] = [
         {
             role: 'system',
-            content:
-                `This is a template for markdown content.
+            content: `
+This is a template for generative content.
 
-Generate a response according to these rules:
-- Constants are given by "user:#key"
-- Content is given by "user:[#index]"
-- Context is given by "element:#tag"
+Generate a markdown response according to these rules:
+- Context is given by "element:{tag}" serving as auxiliary information, not to be included in the response
+- Content is given by "user:[{index}]" serving as the input data for the generated output data
+- Constants are given by "user:{key}" serving as parameters
 `
         },
         ...elements.map((e: Item) => ({
@@ -86,48 +86,5 @@ Generate a response according to these rules:
         }
 
         return JSON.stringify(ret)
-
-
-
-        const options = {
-            method: 'POST',
-            url: 'https://openai80.p.rapidapi.com/completions',
-            headers: {
-                'content-type': 'application/json',
-                'X-RapidAPI-Key': 'acee344339mshfa967de0b6a29d8p148e75jsn9a5790c07991',
-                'X-RapidAPI-Host': 'openai80.p.rapidapi.com'
-            },
-            data: {
-                model: 'text-davinci-003',
-                prompt: messagesToPrompt(messages),
-                max_tokens: 7,
-                temperature: 0,
-                top_p: 1,
-                n: 1,
-                stream: false,
-                logprobs: null,
-                stop: '\n'
-            }
-        };
-
-        try {
-            const response = await axios.request(options);
-
-            console.log(response.data);
-
-            return response.data
-        } catch (error) {
-            console.error(error);
-            throw error
-        }
     }
-}
-
-
-
-function messagesToPrompt(messages: Message[]) {
-    return messages.map(m => `
-⫻${m.role}⫽
-${m.content}
-`).join('\n\n\n')
 }
