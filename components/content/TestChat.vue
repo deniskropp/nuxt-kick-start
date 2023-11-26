@@ -13,7 +13,7 @@ const { markdown, pending, ask, messages, generate } = await useKick(props)
 
 async function go(append: boolean) {
 
-    const toc = await queryContent({
+    const toc = queryContent({
         type: 'page',
     })
 
@@ -48,7 +48,7 @@ async function go(append: boolean) {
         messages.push({ role: 'user', content: input.value })
 
         //last.value = await generate([...messages, { role: 'user:paths', content: renderedToc }])
-        last.value = await generate([...messages, { role: 'system', content: 'Provide the best answer in case of a question. Remember, you are extending a document by generating a part using this template.' }])
+        last.value = await generate([...messages, { role: 'system', content: 'Provide the best answer in case of a question. Remember, you are extending a document, generating yet another part, while using this template.' }])
 
         if (append)
             markdown.value += `\n\n---\n\n*${input.value}*\n---\n\n${last.value}`
