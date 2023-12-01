@@ -10,7 +10,7 @@ interface Item {
     children?: Item[]
 }
 
-function getText(item: Item): string {
+export function getText(item: Item): string {
     var str: string[] = []
 
     if (item.type === 'text')
@@ -47,8 +47,10 @@ export function useChat(constants?: any) {
     // Content
     const chats = body.children.filter((c: any) => c.tag === 'chat')
 
+    // Constants
     const entries = Object.entries(constants).filter(e => e[1])
 
+    /// Messages
     const messages: Message[] = [
         {
             role: 'system',
@@ -78,9 +80,12 @@ export function useChat(constants?: any) {
     }
 
     async function generate(messages: Message[], kick_api?: string) {
+        const infomsgs = await getInfos()
+
         const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', {
             messages: [
-                { role: 'user', content: 'GENERATE MARKDOWN USING FOLLOWING TEMPLATE' },
+                { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
+                ...infomsgs,
                 ...messages,
             ]
         }))
@@ -95,4 +100,13 @@ export function useChat(constants?: any) {
                     data.type
         )
     }
+}
+
+export async function getInfos(): Promise<Message[]> {
+    const ret = await queryContent().where({ layout: { $eq: 'info' } }).find()
+
+    return ret.map(i => ({
+        role: i._id,
+        content: `${i.title}\n${i.body ? getText(i.body) : ''}`
+    }))
 }
