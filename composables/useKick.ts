@@ -1,15 +1,17 @@
-export async function useKick(constants: any) {
-    const { messages, generate } = await useChat(constants)
+export function useKick(constants: any) {
+    const { messages, generate } = useChat(constants)
 
     const markdown = ref('')
     const pending = ref(false)
 
     const ask = () => {
         async function run() {
-            markdown.value = await generate(messages)
-        }
+            pending.value = true
 
-        pending.value = true
+            markdown.value = await generate(messages)
+
+            pending.value = false
+        }
 
         run()
     }
@@ -22,3 +24,36 @@ export async function useKick(constants: any) {
         generate
     }
 }
+
+
+/*
+
+    const toc = queryContent({
+        type: 'page',
+    })
+
+    const renderToc = (tree: any[]) => {
+        console.log(tree)
+        let markdown = ''
+
+        for (const node of tree) {
+            if (node.type === 'heading') {
+                if (node.depth === 1) {
+                    markdown += `# ${node.title}\n`
+                } else if (node.depth === 2) {
+                    markdown += `## ${node.title}\n`
+                } else {
+                    markdown += `### ${node.title}\n`
+                }
+            } else {
+                //                markdown += `${node.content}\n`
+                markdown += `${node._path}\n`
+            }
+        }
+
+        return markdown
+    }
+
+    const renderedToc = renderToc(await toc.find())
+
+*/

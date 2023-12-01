@@ -37,7 +37,7 @@ function getText(item: Item): string {
     return str.join('\n').replaceAll('- \n', '- ')
 }
 
-export async function useChat(constants?: any) {
+export function useChat(constants?: any) {
     const { page } = useContent()
     const { body } = page.value
 
@@ -47,28 +47,27 @@ export async function useChat(constants?: any) {
     // Content
     const chats = body.children.filter((c: any) => c.tag === 'chat')
 
+    const entries = Object.entries(constants).filter(e => e[1])
+
     const messages: Message[] = [
         {
             role: 'system',
-            content: `
-This is a template for generative content.
-
-Generate a markdown response according to these rules:
-- Context is given by "element:{tag}" serving as auxiliary information, not to be included in the response
-- Content is given by "user:[{index}]" serving as the input data for the generated output data
+            content: `This is a template to generate markdown according to these rules:
+- Context elements are given by "context:{tag}" serving as auxiliary information, not to be included in the response
 - Constants are given by "user:{key}" serving as parameters
+- Contents is given by "user" serving as the input data, asking for generated output data
 `
         },
         ...elements.map((e: Item) => ({
-            role: `element:${e.tag ?? ''}`,
+            role: `context:${e.tag ?? ''}`,
             content: getText(e)
         })),
-        ...Object.entries(constants).map(([key, value]) => ({
+        ...entries.map(([key, value]) => ({
             role: `user:${key}`,
             content: value
         })),
         ...chats.map((c: Item, index: number) => ({
-            role: `user:[${index}]`,
+            role: `user`,
             content: getText(c)
         })),
     ]
@@ -79,7 +78,12 @@ Generate a markdown response according to these rules:
     }
 
     async function generate(messages: Message[], kick_api?: string) {
-        const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', { messages }))
+        const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', {
+            messages: [
+                { role: 'user', content: 'GENERATE MARKDOWN USING FOLLOWING TEMPLATE' },
+                ...messages,
+            ]
+        }))
         const data = ret.data.value
 
         if (!data)

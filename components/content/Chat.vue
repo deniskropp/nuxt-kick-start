@@ -6,23 +6,23 @@ const props = defineProps({
     },
     type: {
         type: String,
-        default: 'fictional'
+        default: ''
     },
     kind: {
         type: String,
-        default: 'scientific'
+        default: ''
     },
     value: {
         type: String,
-        default: 'hyper real'
+        default: ''
     },
     matter: {
         type: String,
-        default: 'synthetic'
+        default: ''
     },
 })
 
-const { markdown, pending, ask } = await useKick(props)
+const { markdown, pending, ask } = useKick(props)
 </script>
 
 <template>
