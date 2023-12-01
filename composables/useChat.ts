@@ -82,22 +82,21 @@ export function useChat(constants?: any) {
     async function generate(messages: Message[], kick_api?: string) {
         const infomsgs = await getInfos()
 
-        const ret = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', {
+        const { data } = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', {
             messages: [
                 { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
                 ...infomsgs,
                 ...messages,
             ]
         }))
-        const data = ret.data.value
 
-        if (!data)
+        if (!data.value)
             throw new Error('no data')
 
         return (
-            data.type === 'error' ? data.what :
-                data.type === 'chat' ? data.messages[data.messages.length - 1].content :
-                    data.type
+            data.value.type === 'error' ? data.value.what :
+                data.value.type === 'chat' ? data.value.messages[data.value.messages.length - 1].content :
+                    data.value.type
         )
     }
 }
