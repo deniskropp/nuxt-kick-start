@@ -1,45 +1,12 @@
-import axios from 'axios'
-
+import { getItemText, type Item } from '../lib/item'
 import type { Message } from '../lib/message'
+
 import { kickIt } from '../lib/kick'
-
-interface Item {
-    type: string
-    tag?: string
-    value?: string
-    children?: Item[]
-}
-
-export function getText(item: Item): string {
-    var str: string[] = []
-
-    if (item.type === 'text')
-        str.push(item.value ?? 'ERROR')
-
-    //    if (item.tag === 'h1')
-    //        str.push('# ')
-
-    //    if (item.tag === 'h2')
-    //        str.push('## ')
-
-    //    if (item.tag === 'h3')
-    //        str.push('### ')
-
-    //    if (item.tag === 'h4')
-    //        str.push('#### ')
-
-    if (item.tag === 'li')
-        str.push('- ')
-
-    if (item.children)
-        item.children.forEach(c => str.push(getText(c)))
-
-    return str.join('\n').replaceAll('- \n', '- ')
-}
+import { useInfo } from './info'
 
 export function useChat(constants?: any) {
     const { page } = useContent()
-    const { body } = page.value
+    const { body } = unref(page)
 
     // Context
     const elements = body.children.filter((c: any) => c.tag !== 'chat' && c.tag !== 'test-chat')
@@ -62,7 +29,7 @@ export function useChat(constants?: any) {
         },
         ...elements.map((e: Item) => ({
             role: `context:${e.tag ?? ''}`,
-            content: getText(e)
+            content: getItemText(e)
         })),
         ...entries.map(([key, value]) => ({
             role: `user:${key}`,
@@ -70,7 +37,7 @@ export function useChat(constants?: any) {
         })),
         ...chats.map((c: Item, index: number) => ({
             role: `user`,
-            content: getText(c)
+            content: getItemText(c)
         })),
     ]
 
@@ -80,15 +47,20 @@ export function useChat(constants?: any) {
     }
 
     async function generate(messages: Message[], kick_api?: string) {
-        const infomsgs = await getInfos()
+        const { data } = await useAsyncData('kick', () => {
+            const info = useInfo()
 
-        const { data } = await useAsyncData('kick', () => kickIt(kick_api ?? '/ai', 'chat', {
-            messages: [
-                { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
-                ...infomsgs,
-                ...messages,
-            ]
-        }))
+            return kickIt(kick_api ?? '/ai', 'chat', {
+                messages: [
+                    { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
+                    ...info.map(i => ({
+                        role: i._content._id,
+                        content: `${i.title}\n${i.text}`
+                    })),
+                    ...messages,
+                ]
+            })
+        })
 
         if (!data.value)
             throw new Error('no data')
@@ -99,13 +71,4 @@ export function useChat(constants?: any) {
                     data.value.type
         )
     }
-}
-
-export async function getInfos(): Promise<Message[]> {
-    const ret = await queryContent().where({ layout: { $eq: 'info' } }).find()
-
-    return ret.map(i => ({
-        role: i._id,
-        content: `${i.title}\n${i.body ? getText(i.body) : ''}`
-    }))
 }
