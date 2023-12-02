@@ -15,8 +15,8 @@ export function queryInfo(params?: QueryBuilderParams): QueryBuilder<ParsedConte
         queryContent()).where({ layout: { $eq: 'info' } })
 }
 
-export function useInfo(query: QueryBuilder<ParsedContent> = queryInfo()): Info[] {
-    const { data } = useAsyncData('infos', async (ctx): Promise<Info[]> => {
+export async function useInfo(query: QueryBuilder<ParsedContent> = queryInfo()): Info[] {
+    const { data } = await useAsyncData('infos', async (ctx): Promise<Info[]> => {
         const contents = await query.find()
 
         return contents.map(content => ({

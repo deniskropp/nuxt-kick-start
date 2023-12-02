@@ -47,8 +47,8 @@ export function useChat(constants?: any) {
     }
 
     async function generate(messages: Message[], kick_api?: string) {
-        const { data } = await useAsyncData('kick', () => {
-            const info = useInfo()
+        const { data } = await useAsyncData('kick', async () => {
+            const info = await useInfo()
 
             return kickIt(kick_api ?? '/ai', 'chat', {
                 messages: [
