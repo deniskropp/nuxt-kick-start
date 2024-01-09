@@ -13,7 +13,7 @@
     "nuxt": "latest"
   },
   "dependencies": {
-    "@nuxt/content": "^2.9.0",
+    "@nuxt/content": "^2.10.0",
     "axios": "^1.5.1"
   }
 }
