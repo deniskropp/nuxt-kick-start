@@ -1,3 +1,5 @@
+import BardieTS from 'bardie-ts'
+
 import { getItemText, type Item } from '../lib/item'
 import type { Message } from '../lib/message'
 
@@ -50,7 +52,9 @@ export function useChat(constants?: any) {
         const { data } = await useAsyncData('kick', async () => {
             const info = await useInfo()
 
-            return kickIt(kick_api ?? '/ai', 'chat', {
+            const bard = new BardieTS()
+
+            const req = {
                 messages: [
                     { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
                     ...info.map(i => ({
@@ -59,16 +63,20 @@ export function useChat(constants?: any) {
                     })),
                     ...messages,
                 ]
-            })
+            }
+
+            const res = await bard.question({ask: JSON.stringify(req)})
+
+            console.log(res)
+
+            return res.content
         })
 
         if (!data.value)
             throw new Error('no data')
 
         return (
-            data.value.type === 'error' ? data.value.what :
-                data.value.type === 'chat' ? data.value.messages[data.value.messages.length - 1].content :
-                    data.value.type
+            data.value
         )
     }
 }
