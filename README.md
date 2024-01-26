@@ -1,10 +1,15 @@
 # Nuxt Kick Start
 
-Nuxt Content component module for generative AI
+Nuxt Content test for generative AI
+
+WIP: see also
+
+- [nuxt-kick-it](https://github.com/deniskropp/nuxt-kick-it)
+- [kick-it](https://github.com/deniskropp/kick-it)
 
 ## Demo
 
-Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space).
+Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space). NOT WORKING. Sub module is not being checked out by nuxt.studio deployment.
 
 ## Setup
 
