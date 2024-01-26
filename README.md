@@ -20,16 +20,9 @@ pnpm run dev
 
 Then open [http://localhost:3000](http://localhost:3000) to see the app.
 
-## Content
-
-The content-driven site comes from [nuxt-kick-start](https://github.com/deniskropp/nuxt-kick-start) repository.
-The module will be available seperately before our first release.
-
 ## API
 
-In the background it runs on [KickServe](https://github.com/deniskropp/KickServe).
-The repository is private at the moment, but will be made public soon.
-The server provides end-points for AI text generation as well as means to manage messages (sessions), a graph database, prompt templates and other things.
+TODO: composables/chat.ts will be adapted to use public APIs like bardie-ts.
 
 ## Components
 
