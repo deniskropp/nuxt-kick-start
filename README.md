@@ -22,7 +22,11 @@ Then open [http://localhost:3000](http://localhost:3000) to see the app.
 
 ## API
 
-TODO: composables/chat.ts will be adapted to use public APIs like bardie-ts.
+We are using [Cohere](https://cohere.ai) at the moment, please put your API key in .env!
+
+```env
+COHERE_API_KEY=xyz
+```
 
 ## Components
 
