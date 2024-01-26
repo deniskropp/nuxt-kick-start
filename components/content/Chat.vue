@@ -22,7 +22,7 @@ const props = defineProps({
     },
 })
 
-const { markdown, pending, ask } = useKick(props)
+const { markdown, pending, ask } = await useKick(props)
 </script>
 
 <template>
