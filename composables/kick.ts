@@ -1,5 +1,5 @@
-export function useKick(constants: any) {
-    const { messages, generate } = useChat(constants)
+export async function useKick(constants: any) {
+    const { messages, generate } = await useChat(constants)
 
     const markdown = ref('')
     const pending = ref(false)

@@ -9,7 +9,7 @@ const props = defineProps({
 const input = ref('')
 const last = ref('')
 
-const { markdown, pending, ask, messages, generate } = useKick(props)
+const { markdown, pending, ask, messages, generate } = await useKick(props)
 
 async function go(append: boolean) {
     pending.value = true

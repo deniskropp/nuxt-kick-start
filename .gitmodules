@@ -1,0 +1,3 @@
+[submodule "modules/kick-it"]
+	path = modules/kick-it
+	url = git@github.com:deniskropp/kick-it

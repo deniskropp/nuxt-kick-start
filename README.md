@@ -1,10 +1,15 @@
 # Nuxt Kick Start
 
-Nuxt Content component module for generative AI
+Nuxt Content test for generative AI
+
+WIP: see also
+
+- [nuxt-kick-it](https://github.com/deniskropp/nuxt-kick-it)
+- [kick-it](https://github.com/deniskropp/kick-it)
 
 ## Demo
 
-Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space).
+Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space). NOT WORKING. Sub module is not being checked out by nuxt.studio deployment.
 
 ## Setup
 
@@ -20,16 +25,13 @@ pnpm run dev
 
 Then open [http://localhost:3000](http://localhost:3000) to see the app.
 
-## Content
-
-The content-driven site comes from [nuxt-kick-start](https://github.com/deniskropp/nuxt-kick-start) repository.
-The module will be available seperately before our first release.
-
 ## API
 
-In the background it runs on [KickServe](https://github.com/deniskropp/KickServe).
-The repository is private at the moment, but will be made public soon.
-The server provides end-points for AI text generation as well as means to manage messages (sessions), a graph database, prompt templates and other things.
+We are using [Cohere](https://cohere.ai) at the moment, please put your API key in .env!
+
+```env
+COHERE_API_KEY=xyz
+```
 
 ## Components
 

@@ -1,10 +1,13 @@
-import { getItemText, type Item } from '../lib/item'
+import axios from 'axios'
+
+import { useKickTemplate } from '../modules/kick-it/src'
+
 import type { Message } from '../lib/message'
 
-import { kickIt } from '../lib/kick'
 import { useInfo } from './info'
 
-export function useChat(constants?: any) {
+
+export async function useChat(constants?: any) {
     const { page } = useContent()
     const { body } = unref(page)
 
@@ -15,31 +18,27 @@ export function useChat(constants?: any) {
     const chats = body.children.filter((c: any) => c.tag === 'chat')
 
     // Constants
-    const entries = Object.entries(constants).filter(e => e[1])
+    const entries = Object.entries<string>(constants).filter(e => e[1])
+
+    const info = await useInfo()
+
+    const ti = useKickTemplate({
+        constants: [
+            ...info.map(i => ({ key: i.title, value: i.text })),
+        ],
+    })
+
+    const templ = useKickTemplate({
+        parent: ti,
+        constants: [
+            ...entries.map(([key, value]) => ({ key, value })),
+        ],
+        context: elements,
+        contents: chats
+    })
 
     /// Messages
-    const messages: Message[] = [
-        {
-            role: 'system',
-            content: `This is a template to generate markdown according to these rules:
-- Context elements are given by "context:{tag}" serving as auxiliary information, not to be included in the response
-- Constants are given by "user:{key}" serving as parameters
-- Contents is given by "user" serving as the input data, asking for generated output data
-`
-        },
-        ...elements.map((e: Item) => ({
-            role: `context:${e.tag ?? ''}`,
-            content: getItemText(e)
-        })),
-        ...entries.map(([key, value]) => ({
-            role: `user:${key}`,
-            content: value
-        })),
-        ...chats.map((c: Item, index: number) => ({
-            role: `user`,
-            content: getItemText(c)
-        })),
-    ]
+    const messages = templ.make()
 
     return {
         messages,
@@ -48,27 +47,24 @@ export function useChat(constants?: any) {
 
     async function generate(messages: Message[], kick_api?: string) {
         const { data } = await useAsyncData('kick', async () => {
-            const info = await useInfo()
+            const options = {
+                url: '/api/kick',
+                method: 'POST',
+                data: templ
+            }
 
-            return kickIt(kick_api ?? '/ai', 'chat', {
-                messages: [
-                    { role: 'system', content: 'GENERATE MARKDOWN USING TEMPLATE WITH FOLLOWING INFORMATION' },
-                    ...info.map(i => ({
-                        role: i._content._id,
-                        content: `${i.title}\n${i.text}`
-                    })),
-                    ...messages,
-                ]
-            })
+            const result = await axios.request(options)
+
+            console.log('---\n', result.data)
+
+            return result.data
         })
 
         if (!data.value)
             throw new Error('no data')
 
         return (
-            data.value.type === 'error' ? data.value.what :
-                data.value.type === 'chat' ? data.value.messages[data.value.messages.length - 1].content :
-                    data.value.type
+            data.value
         )
     }
 }
