@@ -1,15 +1,32 @@
 # Nuxt Kick Start
 
-Nuxt Content test for generative AI
+This site demos generative AI with Nuxt Content
 
-WIP: see also
 
-- [nuxt-kick-it](https://github.com/deniskropp/nuxt-kick-it)
-- [kick-it](https://github.com/deniskropp/kick-it)
+## Intro
 
-## Demo
+Testing repo and site (Kick It - Nuxt Content using generative AI)
+
+### See also (core package, submodule)
+
+[kick-it](https://github.com/deniskropp/kick-it)
+
+### Nuxt Module (will use this one soon)
+
+[nuxt-kick-it](https://github.com/deniskropp/nuxt-kick-it)
+
+
+## Demo (issue)
 
 Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space). NOT WORKING. Sub module is not being checked out by nuxt.studio deployment.
+
+## Checkout
+
+```bash
+git clone git@github.com:deniskropp/nuxt-kick-start
+cd nuxt-kick-start
+git submodule update --init
+```
 
 ## Setup
 
@@ -20,7 +37,7 @@ pnpm install
 ## Development
 
 ```bash
-pnpm run dev
+pnpm dev
 ```
 
 Then open [http://localhost:3000](http://localhost:3000) to see the app.
