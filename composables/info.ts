@@ -1,6 +1,6 @@
 import type { ParsedContent, QueryBuilder, QueryBuilderParams } from '@nuxt/content/dist/runtime/types'
 
-import { getItemText } from '../lib/item'
+import { getItemText } from '../modules/kick-it/src/getItemText'
 
 
 export interface Info {
@@ -15,7 +15,7 @@ export function queryInfo(params?: QueryBuilderParams): QueryBuilder<ParsedConte
         queryContent()).where({ layout: { $eq: 'info' } })
 }
 
-export async function useInfo(query: QueryBuilder<ParsedContent> = queryInfo()): Info[] {
+export async function useInfo(query: QueryBuilder<ParsedContent> = queryInfo()): Promise<Info[]> {
     const { data } = await useAsyncData('infos', async (ctx): Promise<Info[]> => {
         const contents = await query.find()
 

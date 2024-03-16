@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { queryInfo } from '../composables/info'
-import { getItemText } from '../lib/item'
+import { getItemText } from '../modules/kick-it/src/getItemText'
 
 const params = queryInfo().params()
 </script>
