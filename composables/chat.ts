@@ -46,7 +46,7 @@ export async function useChat(constants?: any) {
     async function generate(messages: Message[], kick_api?: string) {
         const { data } = await useAsyncData('kick', async () => {
             const options = {
-                url: 'https://nuxt.violass.club/api/kick',  // FIXME: Nuxt Studio does not allow POST method (405)
+                url: '/api/kick',
                 method: 'POST',
                 data: templ
             }
