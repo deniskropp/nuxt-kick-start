@@ -46,7 +46,7 @@ export async function useChat(constants?: any) {
     async function generate(messages: Message[], kick_api?: string) {
         const { data } = await useAsyncData('kick', async () => {
             const options = {
-                url: '/api/kick',
+                url: 'https://nuxt.violass.club/api/kick',
                 method: 'POST',
                 data: templ
             }
