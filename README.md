@@ -16,9 +16,9 @@ Testing repo and site (Kick It - Nuxt Content using generative AI)
 [nuxt-kick-it](https://github.com/deniskropp/nuxt-kick-it)
 
 
-## Demo (issue)
+## Demo
 
-Check out the demo at [kick-start.nuxt.space](https://kick-start.nuxt.space). NOT WORKING. Sub module is not being checked out by nuxt.studio deployment.
+Check out the deployment at [kick-start.nuxt.space](https://kick-start.nuxt.space).
 
 ## Checkout
 
