@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-import { useKickTemplate } from '../modules/kick-it/src'
-
-import type { Message } from '../lib/message'
+import { type Message, useKickTemplate } from '../modules/kick-it/src'
 
 import { useInfo } from './info'
 

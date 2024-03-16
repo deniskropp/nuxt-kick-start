@@ -1,6 +1,6 @@
 import type { ParsedContent, QueryBuilder, QueryBuilderParams } from '@nuxt/content/dist/runtime/types'
 
-import { getItemText } from '../modules/kick-it/src/getItemText'
+import { getItemText } from '../modules/kick-it/src'
 
 
 export interface Info {
